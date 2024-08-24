@@ -22,10 +22,17 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    compileOnly('jakarta.servlet:jakarta.servlet-api:5.0.0')
+    // Dependency cho Jakarta Servlet API
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:5.0.0'
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    // Dependency cho JDBC driver SQL Server
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.2.0.jre8'
+
+    // Các dependency cho JUnit
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+
 }
 
 test {
