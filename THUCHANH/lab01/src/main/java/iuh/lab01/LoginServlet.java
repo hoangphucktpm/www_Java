@@ -42,8 +42,6 @@ public class LoginServlet extends HttpServlet {
             out.println("<h1>Login failed!</h1>");
             out.println("</body></html>");
         }
-
-        // Đóng PrintWriter
         out.close();
     }
 }
