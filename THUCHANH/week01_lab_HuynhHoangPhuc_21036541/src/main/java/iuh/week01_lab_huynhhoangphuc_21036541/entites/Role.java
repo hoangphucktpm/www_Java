@@ -21,6 +21,14 @@ public class Role {
     @Column(name = "status", nullable = false)
     private Byte status;
 
+
+    public Role(String roleId, String roleName, String description, Byte status) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.description = description;
+        this.status = status;
+    }
+
     public String getRoleId() {
         return roleId;
     }

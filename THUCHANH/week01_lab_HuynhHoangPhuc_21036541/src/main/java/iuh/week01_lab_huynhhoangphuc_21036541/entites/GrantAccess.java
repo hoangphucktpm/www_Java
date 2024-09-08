@@ -68,4 +68,11 @@ public class GrantAccess {
         this.note = note;
     }
 
+    public GrantAccess(Account accountID, Role roleID, boolean isGrant, String note) {
+        this.account = accountID;
+        this.role = roleID;
+        this.isGrant = isGrant;
+        this.note = note;
+    }
+
 }

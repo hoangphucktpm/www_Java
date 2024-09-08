@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable {
     @Id
     @Column(name = "account_id", nullable = false, length = 50)
     private String accountId;
@@ -74,5 +76,16 @@ public class Account {
     public void setStatus(Byte status) {
         this.status = status;
     }
+
+    public Account(String accountId, String fullName, String password, String email, String phone, Byte status) {
+        this.accountId = accountId;
+        this.fullName = fullName;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.status = status;
+    }
+
+
 
 }

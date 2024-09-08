@@ -26,6 +26,17 @@ public class Log {
     @Column(name = "notes", nullable = false, length = 250)
     private String notes;
 
+    public Log() {
+    }
+
+    public Log(Long id, String accountId, Instant loginTime, Instant logoutTime, String notes) {
+        this.id = id;
+        this.accountId = accountId;
+        this.loginTime = loginTime;
+        this.logoutTime = logoutTime;
+        this.notes = notes;
+    }
+
     public Long getId() {
         return id;
     }
@@ -65,5 +76,6 @@ public class Log {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
 
 }
