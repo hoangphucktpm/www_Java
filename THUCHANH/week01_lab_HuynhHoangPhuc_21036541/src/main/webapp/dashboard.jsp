@@ -16,6 +16,26 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn-primary {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 <%
@@ -145,18 +165,38 @@
 <% } else { %>
 <!-- User Info -->
 <div class="container mt-5">
-    <h1>Thông tin cá nhân</h1>
-    <p>
-        Account ID: <%= account.getAccountId() %> <br>
-        Tên đầy đủ: <%= account.getFullName() %> <br>
-        Mật khẩu: <%= account.getPassword() %> <br>
-        Email: <%= account.getEmail() %> <br>
-        Điện thoại: <%= account.getPhone() %> <br>
-        Status: <%= account.getStatus() %> <br>
-    </p>
-    <form action="control-servlet" method="post">
+    <h1 class="mb-4 text-center">Thông tin cá nhân</h1>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Account ID:</strong> <%= account.getAccountId() %></p>
+            <p><strong>Tên đầy đủ:</strong> <%= account.getFullName() %></p>
+            <p><strong>Mật khẩu:</strong> <%= account.getPassword() %></p>
+            <p><strong>Email:</strong> <%= account.getEmail() %></p>
+            <p><strong>Điện thoại:</strong> <%= account.getPhone() %></p>
+            <p><strong>Status:</strong> <%= account.getStatus() %></p>
+            <h2>Quyền truy cập</h2>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th>Role Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                    for (Role role : roles) {
+                %>
+                <tr>
+                    <td><%= role.getRoleName() %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <form action="control-servlet" method="post" class="mt-3">
         <input type="hidden" name="action" value="logout">
-        <input type="submit" value="Đăng xuất" class="btn btn-danger">
+        <button type="submit" class="btn btn-danger btn-block">Đăng xuất</button>
     </form>
 </div>
 
