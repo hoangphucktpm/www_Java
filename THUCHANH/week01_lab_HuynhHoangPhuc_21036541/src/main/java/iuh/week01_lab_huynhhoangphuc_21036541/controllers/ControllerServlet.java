@@ -1,8 +1,10 @@
 package iuh.week01_lab_huynhhoangphuc_21036541.controllers;
 
 import iuh.week01_lab_huynhhoangphuc_21036541.dao.AccountDao;
+import iuh.week01_lab_huynhhoangphuc_21036541.dao.GrantAccessDao;
 import iuh.week01_lab_huynhhoangphuc_21036541.entites.Account;
 
+import iuh.week01_lab_huynhhoangphuc_21036541.entites.GrantAccess;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "ControlServlet", value = "/control-servlet")
 public class ControllerServlet extends HttpServlet {
@@ -58,10 +62,16 @@ public class ControllerServlet extends HttpServlet {
             return;
         }
 
+        System.out.println("Action: " + action);
+
         switch (action.toLowerCase()) {
             case "deleteaccount":
                 handleDeleteAccount(req, resp, session);
                 break;
+            case "deletegrantaccess":
+                handleDeleteGrantAccess(req, resp, session);
+                break;
+
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action.");
                 break;
@@ -120,12 +130,21 @@ public class ControllerServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         byte status = Byte.parseByte(req.getParameter("status"));
 
+        AccountDao accountDaoCheck = new AccountDao();
+        Optional<Account> optional = accountDaoCheck.layTheoMa(accountID);
+        if (!optional.isEmpty()) {
+            session.setAttribute("addStatus", "Tài khoản đã tồn tại.");
+            resp.sendRedirect("dashboard.jsp");
+            return;
+        }
+
+
         Account account = new Account(accountID, fullName, password, email, phone, status);
         AccountDao accountDao = new AccountDao();
         boolean result = accountDao.them(account);
 
         if (result) {
-            session.setAttribute("addStatus", "Thêm tài khoản thành công.");
+            session.setAttribute("  ", "Thêm tài khoản thành công.");
         } else {
             session.setAttribute("addStatus", "Thêm tài khoản thất bại.");
         }
@@ -148,6 +167,28 @@ public class ControllerServlet extends HttpServlet {
 
         resp.sendRedirect("dashboard.jsp");
     }
+
+    private void handleDeleteGrantAccess(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
+        String accountID = req.getParameter("accountID");
+        String roleID = req.getParameter("roleID");
+
+        if (accountID == null || roleID == null || accountID.trim().isEmpty() || roleID.trim().isEmpty()) {
+            session.setAttribute("deleteGrantAccessStatus", "Account ID and Role ID must not be empty.");
+            resp.sendRedirect("dashboard.jsp");
+            return;
+        }
+
+        GrantAccessDao grantAccessDao = new GrantAccessDao();
+        boolean result = grantAccessDao.layDs().removeIf(grantAccess -> grantAccess.getId().getAccountId().equals(accountID) && grantAccess.getId().getRoleId().equals(roleID));
+        if (result) {
+            session.setAttribute("deleteGrantAccessStatus", "Xóa quyền truy cập thành công.");
+        } else {
+            session.setAttribute("deleteGrantAccessStatus", "Xóa quyền truy cập thất bại.");
+        }
+
+        resp.sendRedirect("dashboard.jsp");
+    }
+
 
     private void handleLogout(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
         session.invalidate();

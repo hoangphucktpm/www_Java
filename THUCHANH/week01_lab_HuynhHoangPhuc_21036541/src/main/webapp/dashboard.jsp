@@ -22,18 +22,28 @@
             background-color: #f8f9fa;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin-top: 50px;
             padding: 20px;
             background-color: #ffffff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
         .btn-primary {
-            width: 100%;
+            /* Add your custom styles here */
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table thead th {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        .btn-sm {
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -79,13 +89,21 @@
 <% if (isAdmin) { %>
 <!-- Admin Dashboard -->
 <div class="container mt-5">
+    <%
+        String addStatus = (String) session.getAttribute("addStatus");
+        if (addStatus != null) {
+    %>
+    <div class="alert alert-info"><%= addStatus %></div>
+    <%
+            session.removeAttribute("addStatus");
+        }
+    %>
     <h1 class="mb-4">Quản lý tài khoản</h1>
-    <a href='addAccount.jsp' class="btn btn-primary mb-3">Thêm tài khoản</a>
-    <form action="control-servlet" method="post" style="display:inline;">
-        <input type="hidden" name="action" value="logout">
-        <input type="submit" value="Đăng xuất" class="btn btn-danger mb-3">
+    <a href='addAccount.jsp' class="btn btn-primary btn-sm mb-3">Thêm tài khoản</a>
+    <input type="hidden" name="action" value="logout">
+    <input type="submit" value="Đăng xuất" class="btn btn-danger mb-3">
     </form>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-hover">
         <thead class="thead-light">
         <tr>
             <th>Account ID</th>
@@ -115,7 +133,7 @@
                 <script>
                     function confirmDeletion(accountId) {
                         if (confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')) {
-                            window.location.href = 'control-servlet?action=deleteAccount&accountID=' + accountId;
+                            window.location.href = 'control-servlet?action=deleteaccount&accountID=' + accountId;
                         }
                     }
                 </script>
@@ -125,7 +143,21 @@
         </tbody>
     </table>
     <h2 class="mt-5">Cấp quyền</h2>
-    <table class="table table-bordered">
+    <!-- Radio buttons for filtering -->
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="roleFilter" id="filterAll" value="all" onclick="filterRoles()" checked>
+        <label class="form-check-label" for="filterAll">All</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="roleFilter" id="filterAdmin" value="admin" onclick="filterRoles()">
+        <label class="form-check-label" for="filterAdmin">Admin</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="roleFilter" id="filterUser" value="user" onclick="filterRoles()">
+        <label class="form-check-label" for="filterUser">User</label>
+    </div>
+
+    <table class="table table-bordered table-hover mt-3">
         <thead class="thead-light">
         <tr>
             <th>Account ID</th>
@@ -135,21 +167,21 @@
             <th>Thao tác</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="grantAccessTable">
         <%
             for (GrantAccess grantAccess : grantAccessService.layDanhSachGrantAccess()) {
         %>
-        <tr>
+        <tr class="grant-access-row" data-role="<%= grantAccess.getRole().getRoleId() %>">
             <td><%= grantAccess.getAccount().getAccountId() %></td>
             <td><%= grantAccess.getRole().getRoleId() %></td>
             <td><%= grantAccess.getIsGrant() ? "1" : "0" %></td>
             <td><%= grantAccess.getNote() %></td>
             <td>
-                <a href='addGrantAccess.jsp?accountID=<%= grantAccess.getAccount().getAccountId() %>' class="btn btn-primary btn-sm">Thêm</a> |
+                <a href='addGrantAccess.jsp?accountID=<%= grantAccess.getAccount().getAccountId() %>' class="btn btn-sm btn-primary">Thêm</a> |
                 <a href='editGrantAccess.jsp?accountID=<%= grantAccess.getAccount().getAccountId() %>&roleID=<%= grantAccess.getRole().getRoleId() %>' class="btn btn-warning btn-sm">Sửa</a> |
-                <a href='javascript:void(0);' onclick="confirmDeletion('<%= grantAccess.getAccount().getAccountId() %>','<%= grantAccess.getRole().getRoleId() %>')" class="btn btn-danger btn-sm">Xóa</a>
+                <a href='javascript:void(0);' onclick="confirmDeletion2('<%= grantAccess.getAccount().getAccountId() %>','<%= grantAccess.getRole().getRoleId() %>')" class="btn btn-danger btn-sm">Xóa</a>
                 <script>
-                    function confirmDeletion(accountId, roleId) {
+                    function confirmDeletion2(accountId, roleId) {
                         if (confirm('Bạn có chắc chắn muốn xóa quyền này không?')) {
                             window.location.href = 'control-servlet?action=deleteGrantAccess&accountID=' + accountId + '&roleID=' + roleId;
                         }
@@ -208,5 +240,19 @@
     <p><%= e.getMessage() %></p>
 </div>
 <% } %>
+
+<script>
+    function filterRoles() {
+        var selectedRole = document.querySelector('input[name="roleFilter"]:checked').value;
+        var rows = document.querySelectorAll('.grant-access-row');
+        rows.forEach(function(row) {
+            if (selectedRole === 'all' || row.getAttribute('data-role') === selectedRole) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
 </body>
 </html>
