@@ -61,4 +61,7 @@ public class Role {
         this.status = status;
     }
 
+    public Role() {
+    }
+
 }

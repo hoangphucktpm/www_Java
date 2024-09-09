@@ -2,6 +2,8 @@ package iuh.week01_lab_huynhhoangphuc_21036541.dao;
 
 import iuh.week01_lab_huynhhoangphuc_21036541.connectDB.ConnectDB;
 import iuh.week01_lab_huynhhoangphuc_21036541.entites.Account;
+import iuh.week01_lab_huynhhoangphuc_21036541.entites.GrantAccess;
+import iuh.week01_lab_huynhhoangphuc_21036541.entites.Role;
 import iuh.week01_lab_huynhhoangphuc_21036541.repositories.IRepository;
 
 import jakarta.inject.Inject;
@@ -23,20 +25,55 @@ public class AccountDao implements IRepository<Account> {
 
     @Override
     public boolean them(Account account) {
-        // Implement the method if needed
-        return false;
+        try {
+            // Ensure the connection uses UTF-8 encoding
+            String query = "INSERT INTO account (account_id, full_name, password, email, phone, status) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, account.getAccountId());
+            preparedStatement.setString(2, account.getFullName());
+            preparedStatement.setString(3, account.getPassword());
+            preparedStatement.setString(4, account.getEmail());
+            preparedStatement.setString(5, account.getPhone());
+            preparedStatement.setByte(6, account.getStatus());
+            int rowsInserted = preparedStatement.executeUpdate();
+            return rowsInserted > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean xoa(Account account) {
-        // Implement the method if needed
-        return false;
+        try {
+            String query = "DELETE FROM account WHERE account_id = ?";
+            PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, account.getAccountId());
+            int rowsDeleted = preparedStatement.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean capNhat(Account account) {
-        // Implement the method if needed
-        return false;
+        try {
+            String query = "UPDATE account SET password = ?, full_name = ?, email = ?, phone = ?, status = ? WHERE account_id = ?";
+            PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, account.getPassword());
+            preparedStatement.setString(2, account.getFullName());
+            preparedStatement.setString(3, account.getEmail());
+            preparedStatement.setString(4, account.getPhone());
+            preparedStatement.setByte(5, account.getStatus());
+            preparedStatement.setString(6, account.getAccountId());
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -85,6 +122,16 @@ public class AccountDao implements IRepository<Account> {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Role> layDanhSachRoleByAccount(String accountId) {
+        return List.of();
+    }
+
+    @Override
+    public List<GrantAccess> layDanhSachGrantAccessByAccount(String accountId) {
+        return List.of();
     }
 
     public Optional<Account> kiemTraDangNhap(String userName, String password) {

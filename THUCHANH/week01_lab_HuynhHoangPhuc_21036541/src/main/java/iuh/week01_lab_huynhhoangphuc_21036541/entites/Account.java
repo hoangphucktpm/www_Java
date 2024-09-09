@@ -86,6 +86,14 @@ public class Account implements Serializable {
         this.status = status;
     }
 
+    public Account(String accountId) {
+        this.accountId = accountId;
+    }
+
+
+    public Account() {
+    }
+
 
 
 }

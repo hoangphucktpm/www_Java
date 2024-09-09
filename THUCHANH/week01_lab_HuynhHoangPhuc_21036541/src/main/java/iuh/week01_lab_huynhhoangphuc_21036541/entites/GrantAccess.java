@@ -75,4 +75,7 @@ public class GrantAccess {
         this.note = note;
     }
 
+    public GrantAccess() {
+    }
+
 }

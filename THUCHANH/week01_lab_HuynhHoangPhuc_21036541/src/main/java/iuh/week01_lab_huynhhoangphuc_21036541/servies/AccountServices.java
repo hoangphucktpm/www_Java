@@ -25,4 +25,13 @@ public class AccountServices {
     public List<Account> layDanhSachAccount() {
         return accountDao.layDs();
     }
+    public boolean capNhat(Account account) throws Exception {
+        return accountDao.capNhat(account);
+    }
+    public boolean them(Account account) throws Exception {
+        return accountDao.them(account);
+    }
+    public boolean xoa(Account account) throws Exception {
+        return accountDao.xoa(account);
+    }
 }

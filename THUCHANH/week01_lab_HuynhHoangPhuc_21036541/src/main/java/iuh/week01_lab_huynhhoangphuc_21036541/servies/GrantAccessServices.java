@@ -15,4 +15,7 @@ public class GrantAccessServices {
     public List<GrantAccess> layDanhSachGrantAccess(){
         return grantAccessDao.layDs();
     }
+    public List<GrantAccess> layDanhSachGrantAccessByAccount(String accountId){
+        return grantAccessDao.layDanhSachGrantAccessByAccount(accountId);
+    }
 }

@@ -1,6 +1,7 @@
 package iuh.week01_lab_huynhhoangphuc_21036541.dao;
 
 import iuh.week01_lab_huynhhoangphuc_21036541.connectDB.ConnectDB;
+import iuh.week01_lab_huynhhoangphuc_21036541.entites.GrantAccess;
 import iuh.week01_lab_huynhhoangphuc_21036541.entites.Role;
 import iuh.week01_lab_huynhhoangphuc_21036541.repositories.IRepository;
 
@@ -67,5 +68,31 @@ public class RoleDao implements IRepository<Role> {
         }
         return Optional.empty();
 
+    }
+
+    @Override
+    public List<Role> layDanhSachRoleByAccount(String accountId) {
+        List<Role> roles = new ArrayList<>();
+        try {
+            String query = "SELECT r.role_id, r.role_name, r.description, r.status " +
+                    "FROM role r " +
+                    "JOIN grant_access ga ON r.role_id = ga.role_id " +
+                    "WHERE ga.account_id = ?";
+            PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, accountId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Role role = new Role(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getByte(4));
+                roles.add(role);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roles;
+    }
+
+    @Override
+    public List<GrantAccess> layDanhSachGrantAccessByAccount(String accountId) {
+        return List.of();
     }
 }
