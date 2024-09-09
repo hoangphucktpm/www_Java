@@ -18,4 +18,5 @@ public class RoleServices {
     public List<Role> layDanhSachRoleByAccount(String accountId){
         return roleDao.layDanhSachRoleByAccount(accountId);
     }
+
 }

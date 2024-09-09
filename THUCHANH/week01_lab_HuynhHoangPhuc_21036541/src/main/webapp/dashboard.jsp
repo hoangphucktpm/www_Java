@@ -127,6 +127,7 @@
             <td><%= account1.getPhone() %></td>
             <td><%= account1.getStatus() %></td>
             <td>
+                <a href='addGrantAccess.jsp?accountID=<%= account1.getAccountId() %>' class="btn btn-sm btn-primary">Thêm quyền</a> |
                 <a href='editAccount.jsp?accountID=<%= account1.getAccountId() %>' class="btn btn-warning btn-sm">Sửa</a> |
                 <a href='javascript:void(0);' onclick="confirmDeletion('<%= account1.getAccountId() %>')" class="btn btn-danger btn-sm">Xóa</a>
 
@@ -142,7 +143,7 @@
         <% } %>
         </tbody>
     </table>
-    <h2 class="mt-5">Cấp quyền</h2>
+    <h2 class="mt-5">Quản lý quyền truy cập</h2>
     <!-- Radio buttons for filtering -->
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="roleFilter" id="filterAll" value="all" onclick="filterRoles()" checked>

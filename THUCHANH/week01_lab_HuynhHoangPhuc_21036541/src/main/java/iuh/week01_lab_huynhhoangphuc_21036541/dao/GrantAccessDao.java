@@ -24,9 +24,22 @@ public class GrantAccessDao implements IRepository<GrantAccess> {
 
     @Override
     public boolean them(GrantAccess grantAccess) {
-        // Implement the method to add a new GrantAccess
-        return false;
+        String query = "INSERT INTO grant_access (account_id, role_id, is_grant, note) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, grantAccess.getAccount().getAccountId());
+            preparedStatement.setString(2, grantAccess.getRole().getRoleId());
+            preparedStatement.setBoolean(3, grantAccess.getIsGrant());
+            preparedStatement.setString(4, grantAccess.getNote());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
+
 
     @Override
     public boolean xoa(GrantAccess grantAccess) {
@@ -140,4 +153,7 @@ public class GrantAccessDao implements IRepository<GrantAccess> {
         }
         return roles;
     }
+
+
+
 }

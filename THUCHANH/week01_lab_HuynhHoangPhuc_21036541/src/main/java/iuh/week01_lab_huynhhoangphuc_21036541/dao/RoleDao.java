@@ -16,7 +16,7 @@ public class RoleDao implements IRepository<Role> {
     private ConnectDB connectDB;
 
     public RoleDao() {
-        connectDB =new ConnectDB();
+        connectDB = new ConnectDB();
     }
 
     @Override
@@ -37,38 +37,39 @@ public class RoleDao implements IRepository<Role> {
     @Override
     public List<Role> layDs() {
         try {
-            List<Role> list = new ArrayList<Role>();
+            List<Role> list = new ArrayList<>();
             Statement statement = connectDB.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from role");
-            while (resultSet.next()){
-                Role role = new Role(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getByte(4));
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM role");
+            while (resultSet.next()) {
+                Role role = new Role(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getByte(4));
                 list.add(role);
             }
             return list;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public Optional<Role> layTheoMa(Object... objects) throws Exception {
-        try {
-            PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement("select * from role where role_id = ? ");
-            preparedStatement.setString(1,objects.clone()[0].toString());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                Role role = new Role(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getByte(4));
-                return Optional.of(role);
-            }else {
-                throw new Exception("ko tìm thấy dữ liệu");
+    public Optional<Role> layTheoMa(Object... objects) {
+        if (objects.length > 0 && objects[0] instanceof String) {
+            String roleId = (String) objects[0];
+            try {
+                PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement("SELECT * FROM role WHERE role_id = ?");
+                preparedStatement.setString(1, roleId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    Role role = new Role(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getByte(4));
+                    return Optional.of(role);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
         return Optional.empty();
-
     }
+
 
     @Override
     public List<Role> layDanhSachRoleByAccount(String accountId) {

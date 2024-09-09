@@ -26,7 +26,6 @@ public class AccountDao implements IRepository<Account> {
     @Override
     public boolean them(Account account) {
         try {
-            // Ensure the connection uses UTF-8 encoding
             String query = "INSERT INTO account (account_id, full_name, password, email, phone, status) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement(query);
             preparedStatement.setString(1, account.getAccountId());

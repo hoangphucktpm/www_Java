@@ -2,9 +2,12 @@ package iuh.week01_lab_huynhhoangphuc_21036541.controllers;
 
 import iuh.week01_lab_huynhhoangphuc_21036541.dao.AccountDao;
 import iuh.week01_lab_huynhhoangphuc_21036541.dao.GrantAccessDao;
+import iuh.week01_lab_huynhhoangphuc_21036541.dao.RoleDao;
 import iuh.week01_lab_huynhhoangphuc_21036541.entites.Account;
 
 import iuh.week01_lab_huynhhoangphuc_21036541.entites.GrantAccess;
+import iuh.week01_lab_huynhhoangphuc_21036541.entites.GrantAccessId;
+import iuh.week01_lab_huynhhoangphuc_21036541.entites.Role;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -40,6 +43,9 @@ public class ControllerServlet extends HttpServlet {
                 break;
             case "addaccount":
                 handleAddAccount(req, resp, session);
+                break;
+            case "addgrantaccess":
+                handleAddGrantAccess(req, resp, session);
                 break;
             case "logout":
                 handleLogout(req, resp, session);
@@ -132,25 +138,82 @@ public class ControllerServlet extends HttpServlet {
 
         AccountDao accountDaoCheck = new AccountDao();
         Optional<Account> optional = accountDaoCheck.layTheoMa(accountID);
-        if (!optional.isEmpty()) {
+        if (optional.isPresent()) {
             session.setAttribute("addStatus", "Tài khoản đã tồn tại.");
             resp.sendRedirect("dashboard.jsp");
             return;
         }
-
 
         Account account = new Account(accountID, fullName, password, email, phone, status);
         AccountDao accountDao = new AccountDao();
         boolean result = accountDao.them(account);
 
         if (result) {
-            session.setAttribute("  ", "Thêm tài khoản thành công.");
+            session.setAttribute("addStatus", "Thêm tài khoản thành công.");
         } else {
             session.setAttribute("addStatus", "Thêm tài khoản thất bại.");
         }
 
         resp.sendRedirect("dashboard.jsp");
     }
+
+    private void handleAddGrantAccess(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
+        String accountID = req.getParameter("accountID");
+        String[] roleIDs = req.getParameterValues("roleIDs[]");  // Handles multiple roles
+
+        if (accountID == null || roleIDs == null || accountID.trim().isEmpty()) {
+            session.setAttribute("addGrantAccessStatus", "Account ID and Role IDs must not be empty.");
+            resp.sendRedirect("dashboard.jsp");
+            return;
+        }
+
+        GrantAccessDao grantAccessDao = new GrantAccessDao();
+        List<GrantAccess> existingGrantAccesses = grantAccessDao.layDanhSachGrantAccessByAccount(accountID);
+
+        boolean accessGranted = false;
+
+        for (String roleID : roleIDs) {
+            if (roleID == null || roleID.trim().isEmpty()) {
+                continue;
+            }
+
+            boolean exists = existingGrantAccesses.stream()
+                    .anyMatch(grantAccess -> grantAccess.getId().getAccountId().equals(accountID) &&
+                            grantAccess.getId().getRoleId().equals(roleID));
+
+            if (!exists) {
+                GrantAccess grantAccess = new GrantAccess();
+                GrantAccessId grantAccessId = new GrantAccessId(accountID, roleID);
+                grantAccess.setId(grantAccessId);
+
+                Account account = new AccountDao().layTheoMa(accountID).orElse(null);
+                Role role = new RoleDao().layTheoMa((Object) roleID).orElse(null);
+                if (account != null && role != null) {
+                    grantAccess.setAccount(account);
+                    grantAccess.setRole(role);
+                    grantAccess.setIsGrant(true);
+                    grantAccess.setNote("");
+
+                    boolean success = grantAccessDao.them(grantAccess);
+                    if (success) {
+                        accessGranted = true;
+                    }
+                }
+            }
+        }
+
+        // Set success or failure message in session
+        if (accessGranted) {
+            session.setAttribute("addGrantAccessStatus", "Thêm quyền truy cập thành công.");
+        } else {
+            session.setAttribute("addGrantAccessStatus", "Tất cả các quyền truy cập đã tồn tại hoặc không thành công.");
+        }
+
+        resp.sendRedirect("dashboard.jsp");
+    }
+
+
+
 
     private void handleDeleteAccount(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
         String accountID = req.getParameter("accountID");
