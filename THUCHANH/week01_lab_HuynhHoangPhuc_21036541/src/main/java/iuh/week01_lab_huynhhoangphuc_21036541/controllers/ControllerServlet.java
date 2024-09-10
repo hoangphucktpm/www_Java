@@ -101,10 +101,10 @@ public class ControllerServlet extends HttpServlet {
         Optional<Account> optional = accountDao.kiemTraDangNhap(accountID, password);
 
         if (optional.isEmpty()) {
-            session.setAttribute("loginStatus", "Tài khoản hoặc mật khẩu không đúng.");
+            session.setAttribute("addStatus", "Tài khoản hoặc mật khẩu không đúng.");
             resp.sendRedirect("index.jsp");
         } else {
-            session.setAttribute("loginStatus", null);
+            session.setAttribute("addStatus", null);
             session.setAttribute("AccountData", optional.get());
             resp.sendRedirect("dashboard.jsp");
         }
@@ -123,9 +123,9 @@ public class ControllerServlet extends HttpServlet {
         boolean result = accountDao.capNhat(account);
 
         if (result) {
-            session.setAttribute("editStatus", "Cập nhật thông tin tài khoản thành công.");
+            session.setAttribute("addStatus", "Cập nhật thông tin tài khoản thành công.");
         } else {
-            session.setAttribute("editStatus", "Cập nhật thông tin tài khoản thất bại.");
+            session.setAttribute("addStatus", "Cập nhật thông tin tài khoản thất bại.");
         }
 
         resp.sendRedirect("dashboard.jsp");
@@ -162,10 +162,10 @@ public class ControllerServlet extends HttpServlet {
 
     private void handleAddGrantAccess(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
         String accountID = req.getParameter("accountID");
-        String[] roleIDs = req.getParameterValues("roleIDs[]");  // Handles multiple roles
+        String[] roleIDs = req.getParameterValues("roleIDs[]");
 
         if (accountID == null || roleIDs == null || accountID.trim().isEmpty()) {
-            session.setAttribute("addGrantAccessStatus", "Account ID and Role IDs must not be empty.");
+            session.setAttribute("addStatus", "Account ID and Role IDs must not be empty.");
             resp.sendRedirect("dashboard.jsp");
             return;
         }
@@ -205,11 +205,10 @@ public class ControllerServlet extends HttpServlet {
             }
         }
 
-        // Set success or failure message in session
         if (accessGranted) {
-            session.setAttribute("addGrantAccessStatus", "Thêm quyền truy cập thành công.");
+            session.setAttribute("addStatus", "Thêm quyền truy cập thành công.");
         } else {
-            session.setAttribute("addGrantAccessStatus", "Tất cả các quyền truy cập đã tồn tại hoặc không thành công.");
+            session.setAttribute("addStatus", "Tất cả các quyền truy cập đã tồn tại hoặc không thành công.");
         }
 
         resp.sendRedirect("dashboard.jsp");
@@ -226,9 +225,9 @@ public class ControllerServlet extends HttpServlet {
         boolean result = accountDao.xoa(account);
 
         if (result) {
-            session.setAttribute("deleteStatus", "Xóa tài khoản thành công.");
+            session.setAttribute("addStatus", "Xóa tài khoản thành công.");
         } else {
-            session.setAttribute("deleteStatus", "Xóa tài khoản thất bại.");
+            session.setAttribute("addStatus", "Xóa tài khoản thất bại.");
         }
 
         resp.sendRedirect("dashboard.jsp");
@@ -239,21 +238,25 @@ public class ControllerServlet extends HttpServlet {
         String roleID = req.getParameter("roleID");
 
         if (accountID == null || roleID == null || accountID.trim().isEmpty() || roleID.trim().isEmpty()) {
-            session.setAttribute("deleteGrantAccessStatus", "Account ID and Role ID must not be empty.");
+            session.setAttribute("addStatus", "Account ID and Role ID must not be empty.");
             resp.sendRedirect("dashboard.jsp");
             return;
         }
 
         GrantAccessDao grantAccessDao = new GrantAccessDao();
-        boolean result = grantAccessDao.layDs().removeIf(grantAccess -> grantAccess.getId().getAccountId().equals(accountID) && grantAccess.getId().getRoleId().equals(roleID));
+
+        boolean result = grantAccessDao.deleteGrantAccess(accountID, roleID);
+
         if (result) {
-            session.setAttribute("deleteGrantAccessStatus", "Xóa quyền truy cập thành công.");
+            session.setAttribute("addStatus", "Xóa quyền truy cập thành công.");
         } else {
-            session.setAttribute("deleteGrantAccessStatus", "Xóa quyền truy cập thất bại.");
+            session.setAttribute("addStatus", "Xóa quyền truy cập thất bại.");
         }
 
         resp.sendRedirect("dashboard.jsp");
     }
+
+
 
 
     private void handleLogout(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {

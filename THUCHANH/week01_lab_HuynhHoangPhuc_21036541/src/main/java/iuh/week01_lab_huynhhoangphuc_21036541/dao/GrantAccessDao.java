@@ -154,6 +154,20 @@ public class GrantAccessDao implements IRepository<GrantAccess> {
         return roles;
     }
 
+    public boolean deleteGrantAccess(String accountID, String roleID) {
+        String query = "DELETE FROM grant_access WHERE account_id = ? AND role_id = ?";
+        try (PreparedStatement preparedStatement = connectDB.getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, accountID);
+            preparedStatement.setString(2, roleID);
+            int rowsDeleted = preparedStatement.executeUpdate();
+            return rowsDeleted > 0;  // Return true if deletion was successful
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 
 
 }

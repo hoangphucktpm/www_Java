@@ -30,7 +30,6 @@
             border-radius: 8px;
         }
         .btn-primary {
-            /* Add your custom styles here */
         }
         .card {
             margin-bottom: 20px;
@@ -81,7 +80,6 @@
             }
         }
 
-        // Khởi tạo GrantAccessServices
         GrantAccessServices grantAccessService = new GrantAccessServices();
 
 %>
@@ -182,8 +180,7 @@
             <td><%= grantAccess.getIsGrant() ? "1" : "0" %></td>
             <td><%= grantAccess.getNote() %></td>
             <td>
-                <a href='addGrantAccess.jsp?accountID=<%= grantAccess.getAccount().getAccountId() %>' class="btn btn-sm btn-primary">Thêm</a> |
-                <a href='editGrantAccess.jsp?accountID=<%= grantAccess.getAccount().getAccountId() %>&roleID=<%= grantAccess.getRole().getRoleId() %>' class="btn btn-warning btn-sm">Sửa</a> |
+                <a href='addGrantAccess.jsp?accountID=<%= grantAccess.getAccount().getAccountId() %>' class="btn btn-sm btn-primary">Cập nhật</a> |
                 <a href='javascript:void(0);' onclick="confirmDeletion2('<%= grantAccess.getAccount().getAccountId() %>','<%= grantAccess.getRole().getRoleId() %>')" class="btn btn-danger btn-sm">Xóa</a>
                 <script>
                     function confirmDeletion2(accountId, roleId) {
