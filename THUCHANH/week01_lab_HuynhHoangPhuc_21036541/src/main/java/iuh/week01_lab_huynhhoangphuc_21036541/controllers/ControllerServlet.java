@@ -29,6 +29,9 @@ public class ControllerServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
+        System.out.println("Action: " + action);
+
+
         if (action == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action parameter is missing.");
             return;

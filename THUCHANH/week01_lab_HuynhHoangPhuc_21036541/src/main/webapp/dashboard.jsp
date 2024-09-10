@@ -99,9 +99,13 @@
         }
     %>
     <h1 class="mb-4">Quản lý tài khoản</h1>
+
     <a href='addAccount.jsp' class="btn btn-primary btn-sm mb-3">Thêm tài khoản</a>
-    <input type="hidden" name="action" value="logout">
-    <input type="submit" value="Đăng xuất" class="btn btn-danger mb-3">
+    <form action="control-servlet" method="post" style="display:inline;">
+        <input type="hidden" name="action" value="logout">
+        <button type="submit" class="btn btn-danger btn-sm mb-3">Đăng xuất</button>
+    </form>
+
     </form>
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
