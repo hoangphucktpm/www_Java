@@ -23,6 +23,9 @@ public class GrantAccessId implements Serializable {
         this.accountId = accountId;
     }
 
+    public GrantAccessId() {
+    }
+
     public String getRoleId() {
         return roleId;
     }

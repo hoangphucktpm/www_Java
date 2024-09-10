@@ -31,7 +31,6 @@ public class ControllerServlet extends HttpServlet {
 
         System.out.println("Action: " + action);
 
-
         if (action == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action parameter is missing.");
             return;

@@ -14,5 +14,4 @@ public interface IRepository<T> {
     Optional<T> layTheoMa(Object...objects) throws Exception;
     List<Role> layDanhSachRoleByAccount(String accountId);
     List<GrantAccess> layDanhSachGrantAccessByAccount(String accountId);
-
 }
