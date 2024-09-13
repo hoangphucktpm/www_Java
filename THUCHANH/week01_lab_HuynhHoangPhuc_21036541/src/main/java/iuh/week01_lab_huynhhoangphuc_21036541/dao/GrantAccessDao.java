@@ -131,7 +131,6 @@ public class GrantAccessDao implements IRepository<GrantAccess> {
 
     @Override
     public Optional<GrantAccess> layTheoMa(Object... objects) throws Exception {
-        // Implement the method to get a GrantAccess by its ID
         return Optional.empty();
     }
 
@@ -160,7 +159,7 @@ public class GrantAccessDao implements IRepository<GrantAccess> {
             preparedStatement.setString(1, accountID);
             preparedStatement.setString(2, roleID);
             int rowsDeleted = preparedStatement.executeUpdate();
-            return rowsDeleted > 0;  // Return true if deletion was successful
+            return rowsDeleted > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

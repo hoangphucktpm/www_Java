@@ -2,6 +2,7 @@ package iuh.week01_lab_huynhhoangphuc_21036541.controllers;
 
 import iuh.week01_lab_huynhhoangphuc_21036541.dao.AccountDao;
 import iuh.week01_lab_huynhhoangphuc_21036541.dao.GrantAccessDao;
+import iuh.week01_lab_huynhhoangphuc_21036541.dao.LogDao;
 import iuh.week01_lab_huynhhoangphuc_21036541.dao.RoleDao;
 import iuh.week01_lab_huynhhoangphuc_21036541.entites.Account;
 
@@ -105,6 +106,9 @@ public class ControllerServlet extends HttpServlet {
         } else {
             session.setAttribute("addStatus", null);
             session.setAttribute("AccountData", optional.get());
+
+            LogDao logDao = new LogDao();
+            logDao.logLogin(accountID, "");
             resp.sendRedirect("dashboard.jsp");
         }
     }
@@ -259,8 +263,16 @@ public class ControllerServlet extends HttpServlet {
 
 
     private void handleLogout(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
-        session.invalidate();
-        System.out.println("Logout successfully.");
+        Account account = (Account) session.getAttribute("AccountData");
+        if (account != null) {
+            LogDao logDao = new LogDao();
+            logDao.logLogout(account.getAccountId());
+
+            session.invalidate();
+            System.out.println("Logout successfully.");
+        }
+
         resp.sendRedirect("index.jsp");
     }
+
 }
