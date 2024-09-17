@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
-@Path("/nhanvien")
+@Path("/employees")
 public class EmployeeResources {
     private final EmployeeServices employeeServices;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -26,7 +26,7 @@ public class EmployeeResources {
         if (empOpt.isPresent()) {
             return Response.ok(empOpt.get()).build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build(); // Sửa BAD_REQUEST thành NOT_FOUND
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @GET

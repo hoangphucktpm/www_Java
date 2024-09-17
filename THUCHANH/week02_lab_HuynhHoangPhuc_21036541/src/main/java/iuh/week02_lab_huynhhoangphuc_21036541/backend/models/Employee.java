@@ -14,8 +14,6 @@ import java.util.Objects;
 @Table(name = "employee")
 @NamedQueries(
         @NamedQuery(name = "Employee.findAll", query = "select e from Employee e")
-//        ,@NamedQuery(name = "Employee.findXXXXXXX", query = "select e from Employee e where????")
-        //,...
 )
 public class Employee {
     @Id
