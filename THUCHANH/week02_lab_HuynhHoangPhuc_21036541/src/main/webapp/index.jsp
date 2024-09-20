@@ -58,6 +58,7 @@
         <a href="product.jsp">Product</a>
         <a href="Employees.jsp">Employees</a>
         <a href="Customer.jsp">Customer</a>
+        <a href="OrderList.jsp">OrderList</a>
     </div>
 </div>
 </body>

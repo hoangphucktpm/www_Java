@@ -7,7 +7,7 @@
     <title>Insert Employee</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;

@@ -19,7 +19,7 @@ public class CustomerModel {
 
         Customer customer = new Customer(name, email, phone, address);
         customerService.insertCustomer(customer);
-        resp.sendRedirect("Customers.jsp");
+        resp.sendRedirect("Customer.jsp");
     }
 
     public List<Customer> getAllCustomers() {

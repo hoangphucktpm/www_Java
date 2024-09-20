@@ -50,4 +50,14 @@ public class Orderdetail {
         this.note = note;
     }
 
+    public Orderdetail(OrderdetailId id, Double quantity, Double price, String note) {
+        this.id = id;
+        this.quantity = quantity;
+        this.price = price;
+        this.note = note;
+    }
+
+    public Orderdetail() {
+    }
+
 }

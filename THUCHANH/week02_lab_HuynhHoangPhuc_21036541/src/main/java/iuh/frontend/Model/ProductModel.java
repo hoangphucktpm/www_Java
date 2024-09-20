@@ -47,9 +47,8 @@ public class ProductModel {
             Product product = new Product(id, name, description, unit, manufacturer, ProductStatus.valueOf(status));
             boolean updated = productService.updateProduct(product);
 
-            // Kiểm tra trạng thái cập nhật
             if (updated) {
-                response.sendRedirect("product.jsp"); // Chỉ gọi redirect nếu cập nhật thành công
+                response.sendRedirect("product.jsp");
             } else {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Update failed");
             }
@@ -58,7 +57,7 @@ public class ProductModel {
         } catch (IllegalArgumentException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid product status");
         } catch (Exception e) {
-            e.printStackTrace(); // Ghi log để kiểm tra lỗi
+            e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred");
         }
     }

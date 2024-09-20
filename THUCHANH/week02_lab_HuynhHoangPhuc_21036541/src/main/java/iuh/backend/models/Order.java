@@ -4,10 +4,16 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "orders")
+//@NamedQueries({
+//        @NamedQuery(
+//                name = "Order.getAllOrdersByEmAndDate",
+//                query = "SELECT o FROM Order o WHERE o.employee = :employee AND o.orderDate >= :startDate AND o.orderDate <= :endDate"
+//        ),
+//})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +21,7 @@ public class Order {
     private Long id;
 
     @Column(name = "order_date", nullable = false)
-    private Instant orderDate;
+    private Timestamp orderDate; // Thay đổi từ Instant sang Timestamp
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -35,12 +41,12 @@ public class Order {
         this.id = id;
     }
 
-    public Instant getOrderDate() {
-        return orderDate;
+    public Timestamp getOrderDate() {
+        return orderDate; // Trả về kiểu Timestamp
     }
 
-    public void setOrderDate(Instant orderDate) {
-        this.orderDate = orderDate;
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate; // Nhận kiểu Timestamp
     }
 
     public Employee getEmp() {
@@ -59,4 +65,12 @@ public class Order {
         this.cust = cust;
     }
 
+    public Order() {
+    }
+
+    public Order(Timestamp orderDate, Employee emp, Customer cust) {
+        this.orderDate = orderDate;
+        this.emp = emp;
+        this.cust = cust;
+    }
 }
