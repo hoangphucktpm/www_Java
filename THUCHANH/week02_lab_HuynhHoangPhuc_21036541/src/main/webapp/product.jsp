@@ -49,14 +49,6 @@
         .status-active { color: green; }
         .status-inactive { color: orange; }
         .status-terminated { color: red; }
-        a {
-            text-decoration: none;
-            color: #ffffff;
-            font-weight: 500;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
         button {
             background-color: #007bff;
             color: #ffffff;
@@ -66,21 +58,50 @@
             cursor: pointer;
             font-size: 14px;
             transition: background-color 0.3s;
+            width: 100px;
+            text-align: center;
         }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
         button.delete {
             background-color: #dc3545;
         }
+
         button.update {
             background-color: #ffc107;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         button.update:hover {
             background-color: #e0a800;
         }
+
         button.delete:hover {
             background-color: #c82333;
+        }
+
+        button.back, button.cart {
+            background-color: #28a745;
+        }
+
+        button.back:hover, button.cart:hover {
+            background-color: #218838;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -89,7 +110,7 @@
 <div id="container">
     <h3>Product List</h3>
     <button style="margin-bottom: 20px; padding: 10px 20px; background-color: #007bff; color: #ffffff; border: none; border-radius: 4px; cursor: pointer;">
-        <a href="insertProduct.jsp">Insert New Product</a>
+        <a href="insertProduct.jsp">Thêm</a>
     </button>
     <table>
         <thead>
@@ -110,7 +131,7 @@
             List<Product> productList = productService.getAll();
             for (Product product : productList) {
                 long id = product.getId();
-                String edit_string = "controls?action=edit_product&id=" + id;
+                String edit_string = "controls?action=update_product&id=" + id;
                 String delete_string = (product.getStatus().getValue() != 1) ?
                         "controls?action=active_product&id=" + id :
                         "controls?action=delete_product&id=" + id;
@@ -135,13 +156,14 @@
                 <% } %>
             </td>
             <td>
-                <a href="<%= edit_string %>" class="update">Update</a>
-                <button class="<%= product.getStatus().getValue() == 1 ? "delete" : "update" %>" onclick="window.location.href='<%= delete_string %>';">
-                    <%= product.getStatus().getValue() == 1 ? "Delete" : "Activate" %>
-                </button>
-                <button onclick="window.location.href='index.jsp';">Back</button>
-                <button>Add to Cart</button>
+                <div class="actions">
+                    <button class="update" onclick="window.location.href='updateProduct.jsp?id=<%= id %>';">Update</button>
+                    <button class="<%= product.getStatus().getValue() == 1 ? "delete" : "update" %>" onclick="window.location.href='<%= delete_string %>';"><%= product.getStatus().getValue() == 1 ? "Delete" : "Activate" %></button>
+                    <button class="cart">Add to Cart</button>
+                </div>
             </td>
+
+
         </tr>
         <% } %>
         </tbody>

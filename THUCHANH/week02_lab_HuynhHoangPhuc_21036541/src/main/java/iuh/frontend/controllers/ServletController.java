@@ -1,8 +1,9 @@
-package iuh.frontend.Controller;
+package iuh.frontend.controllers;
 
 
-import iuh.frontend.Model.EmployeeModel;
-import iuh.frontend.Model.ProductModel;
+import iuh.frontend.model.CustomerModel;
+import iuh.frontend.model.EmployeeModel;
+import iuh.frontend.model.ProductModel;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,6 +28,14 @@ public class ServletController extends HttpServlet {
                     case "insert_products":
                         ProductModel productModel = new ProductModel();
                         productModel.insertProduct(request, response);
+                        break;
+                    case "insert_customer":
+                        CustomerModel customerModel = new CustomerModel();
+                        customerModel.insertCust(request, response);
+                        break;
+                    case "update_product":
+                        ProductModel productUpdate = new ProductModel();
+                        productUpdate.updateProduct(request, response);
                         break;
                     default:
                         response.sendRedirect("index.jsp");

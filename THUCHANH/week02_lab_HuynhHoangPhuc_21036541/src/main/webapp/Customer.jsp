@@ -83,18 +83,36 @@
         }
         .insert-link {
             display: block;
-            text-align: center;
-            margin-top: 20px;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .insert-link a {
+            background-color: #28a745;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .insert-link a:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <h3>Customer List</h3>
+
+    <!-- Nút Insert được đặt bên trên bảng -->
+    <div class="insert-link">
+        <a href="insertCustomer.jsp">Insert New Customer</a>
+    </div>
+
     <%
         CustomerService customerService = new CustomerService();
         List<Customer> customerList = customerService.getAll();
     %>
+
     <table>
         <thead>
         <tr>
@@ -103,9 +121,7 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Address</th>
-            <th colspan="2">
-                <a href="insertCustomer.jsp" class="action-links">Insert</a>
-            </th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -122,8 +138,6 @@
             <td><%= customer.getAddress() %></td>
             <td class="action-links">
                 <a href="<%= editString %>" class="update">Update</a>
-            </td>
-            <td class="action-links">
                 <a href="<%= deleteString %>" class="delete">Delete</a>
             </td>
         </tr>

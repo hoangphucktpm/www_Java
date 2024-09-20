@@ -22,6 +22,18 @@ public class Customer {
     @Column(name = "address")
     private String address;
 
+
+
+    public Customer(String custName, String email, String phone, String address) {
+        this.custName = custName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public Customer() {
+    }
+
     public Long getId() {
         return id;
     }

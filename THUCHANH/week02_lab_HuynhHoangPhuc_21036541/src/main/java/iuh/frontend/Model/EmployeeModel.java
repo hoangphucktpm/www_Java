@@ -1,4 +1,4 @@
-package iuh.frontend.Model;
+package iuh.frontend.model;
 
 import iuh.backend.models.Employee;
 import iuh.backend.services.EmployeeService;

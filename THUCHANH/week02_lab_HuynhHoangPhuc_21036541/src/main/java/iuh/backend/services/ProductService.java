@@ -32,6 +32,7 @@ public class ProductService {
     public Optional<Product> findById(long id) {
         return productRepository.findById(id);
     }
+
     public boolean deleteProduct(long id) {
         Optional<Product> op = findById(id);
         if (op.isPresent()) {
@@ -52,6 +53,10 @@ public class ProductService {
         return false;
     }
 
+    public Optional<Product> getProductById(long id) {
+        return findById(id);
+    }
+
     public boolean restProduct(long id) {
         Optional<Product> op = findById(id);
         if (op.isPresent()) {
@@ -61,15 +66,19 @@ public class ProductService {
         }
         return false;
     }
+
     public void updateStatus(Long id, ProductStatus status) {
         productRepository.updateStatus(id, status);
     }
+
     public List<Productimage> getProductImages(long productId) {
         return productRepository.getProductImages(productId);
     }
+
     public List<Productprice> getProductByPrice(long productId) {
         return productRepository.getProductByPrice(productId);
     }
+
     public Productimage getRandomProductImage(long productId) {
         List<Productimage> images = getProductImages(productId);
         if (images.isEmpty()) {
@@ -82,5 +91,4 @@ public class ProductService {
     public List<Productprice> getAllPrice() {
         return productRepository.getAllPrice();
     }
-
 }

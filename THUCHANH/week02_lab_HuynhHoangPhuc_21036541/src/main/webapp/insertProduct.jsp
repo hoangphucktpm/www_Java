@@ -2,6 +2,13 @@
 <%@ page import="iuh.backend.services.ProductService" %>
 <%@ page import="iuh.backend.models.Productprice" %>
 <%@ page import="java.util.List" %>
+
+<%
+    // Lấy danh sách giá sản phẩm từ ProductService
+    ProductService productService = new ProductService();
+    List<Productprice> productprices = productService.getAllPrice();
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +71,22 @@
             background-color: #5a6268;
         }
         .form-actions {
-            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn-container td {
+            border: none;
+        }
+        button {
+            background-color: #28a745;
+        }
+        button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -108,7 +130,12 @@
                         <% } %>
                     </select>
                 </td>
-                <td class="form-actions"><button type="button">New</button></td>
+            </tr>
+            <tr class="btn-container">
+                <td></td>
+                <td class="form-actions">
+                    <button type="button">New</button>
+                </td>
             </tr>
             <tr>
                 <td colspan="2" class="form-actions">

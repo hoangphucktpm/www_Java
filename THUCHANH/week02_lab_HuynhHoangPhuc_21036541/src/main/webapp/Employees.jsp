@@ -110,7 +110,7 @@
             <th>Address</th>
             <th>Status</th>
             <th colspan="2">
-                <a href="insertemployee.jsp" class="insert-link">Insert New Employee</a>
+                <a href="insertEmployee.jsp" class="insert-link">Insert New Employee</a>
             </th>
         </tr>
         </thead>
