@@ -31,7 +31,7 @@ public class Product {
     @Column(name = "status", nullable = false)
     private ProductStatus status;
 
-    public Product() {
+    public Product(String id, String name, String description, String unit, String manufacturer, ProductStatus status) {
 
     }
 
@@ -83,13 +83,10 @@ public class Product {
         this.status = status;
     }
 
-    public Product(String name, String description, String unit, String manufacturerName, ProductStatus status) {
-        this.name = name;
-        this.description = description;
-        this.unit = unit;
-        this.manufacturerName = manufacturerName;
-        this.status = status;
+    public Product() {
     }
+
+
 
     public Product(Long id, String name, String description, String unit, String manufacturerName, ProductStatus status) {
         this.id = id;

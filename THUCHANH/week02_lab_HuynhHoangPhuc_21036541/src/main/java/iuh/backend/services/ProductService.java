@@ -6,6 +6,8 @@ import iuh.backend.models.Productimage;
 import iuh.backend.models.Productprice;
 import iuh.backend.repositories.ProductRepository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -91,4 +93,21 @@ public class ProductService {
     public List<Productprice> getAllPrice() {
         return productRepository.getAllPrice();
     }
+
+    public void insertPrice(Productprice productprice) {
+        productRepository.insertPrice(productprice);
+    }
+
+    public void insertPrice(long id, String price) {
+    }
+
+    public long getNextProductId() {
+        return productRepository.getNextProductId();
+    }
+
+
+
+
+
 }
+

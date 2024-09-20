@@ -2,24 +2,33 @@ package iuh.frontend.model;
 
 import iuh.backend.enums.ProductStatus;
 import iuh.backend.models.Product;
+import iuh.backend.models.Productprice;
+import iuh.backend.models.ProductpriceId;
 import iuh.backend.services.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class ProductModel {
     private final ProductService productService = new ProductService();
 
     public void insertProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String unit = request.getParameter("unit");
         String manufacturer = request.getParameter("manufacturer");
         String status = request.getParameter("status");
 
-        Product product = new Product(name, description, unit, manufacturer, ProductStatus.valueOf(status));
+
+
+        Product product = new Product(id,name, description, unit, manufacturer, ProductStatus.valueOf(status));
         productService.insertProduct(product);
+
         response.sendRedirect("product.jsp");
     }
 
@@ -59,6 +68,41 @@ public class ProductModel {
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred");
+        }
+    }
+
+    public void insertPrice(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String price = request.getParameter("new_price");
+            String note = request.getParameter("note");
+            String productIdParam = request.getParameter("product_id");
+
+            System.out.println("New Price: " + price);
+            System.out.println("Note: " + note);
+            System.out.println("Product ID: " + productIdParam);
+
+
+            Double priceValue = Double.parseDouble(price);
+
+            LocalDateTime now = LocalDateTime.now();
+
+            ProductpriceId productpriceId = new ProductpriceId();
+            productpriceId.setProductId(Long.parseLong(productIdParam));
+            productpriceId.setPriceDateTime(Timestamp.valueOf(now));
+
+            Productprice productprice = new Productprice();
+            productprice.setId(productpriceId);
+            productprice.setPrice(priceValue);
+            productprice.setNote(note);
+
+            productService.insertPrice(productprice);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 

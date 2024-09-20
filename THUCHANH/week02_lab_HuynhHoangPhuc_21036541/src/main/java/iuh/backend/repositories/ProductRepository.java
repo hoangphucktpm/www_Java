@@ -97,6 +97,28 @@ public class ProductRepository {
                 .getResultList();
     }
 
+    public void insertPrice(Productprice productprice) {
+        try {
+            et.begin();
+            em.persist(productprice);
+            et.commit();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            et.rollback();
+        }
+    }
+
+    public long getNextProductId() {
+        long maxId = getMaxProductId();
+        return maxId + 1;
+    }
+
+    private long getMaxProductId() {
+        String query = "SELECT MAX(p.id) FROM Product p";
+        TypedQuery<Long> q = em.createQuery(query, Long.class);
+        return q.getSingleResult();
+    }
+
     public void close() {
         em.close();
     }

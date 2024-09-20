@@ -115,4 +115,18 @@ public class ProductResource {
         }
         return response.build();
     }
+
+    @POST
+    @Path("/{id}/price")
+    @Produces("application/json")
+    public Response insertPrice(@PathParam("id") long id, String price) {
+        Response.ResponseBuilder response = Response.status(Response.Status.BAD_REQUEST);
+        try {
+            productService.insertPrice(id, price);
+            response = Response.status(Response.Status.CREATED);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return response.build();
+    }
 }

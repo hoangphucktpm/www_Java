@@ -136,6 +136,7 @@
     <table>
         <thead>
         <tr>
+            <th>Id</th>
             <th>Image</th>
             <th>Name</th>
             <th>Description</th>
@@ -159,6 +160,7 @@
                 Productimage randomImage = productService.getRandomProductImage(id);
         %>
         <tr>
+            <td><%= product.getId() %></td>
             <td>
                 <% if (randomImage != null) { %>
                 <img src="<%= randomImage.getPath() %>" alt="<%= randomImage.getAlternative() %>" style="width: 100px; height: auto;">

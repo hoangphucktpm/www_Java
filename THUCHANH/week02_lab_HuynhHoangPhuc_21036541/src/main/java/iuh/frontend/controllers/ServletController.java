@@ -37,6 +37,10 @@ public class ServletController extends HttpServlet {
                         ProductModel productUpdate = new ProductModel();
                         productUpdate.updateProduct(request, response);
                         break;
+                    case "insert_price":
+                        ProductModel productPrice = new ProductModel();
+                        productPrice.insertPrice(request, response);
+                        break;
                     default:
                         response.sendRedirect("index.jsp");
                         break;
