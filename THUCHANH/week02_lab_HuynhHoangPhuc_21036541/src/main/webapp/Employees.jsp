@@ -80,8 +80,38 @@
             background-color: #c82333;
         }
         .insert-link {
-            text-align: center;
-            margin-top: 20px;
+            display: block;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .insert-link a {
+            background-color: #28a745;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .insert-link a:hover {
+            background-color: #218838;
+        }
+        .back-link {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .back-link a {
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            border: 1px solid #007bff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .back-link a:hover {
+            background-color: #007bff;
+            color: #ffffff;
         }
     </style>
     <script>
@@ -95,6 +125,12 @@
 <body>
 <div class="container">
     <h3>Employees List</h3>
+    <div class="back-link">
+        <a href="index.jsp">Trở về</a>
+    </div>
+    <div class="insert-link">
+        <a href="insertEmployee.jsp" style="font-weight: bold;">Insert New Employee</a>
+    </div>
     <%
         EmployeeService employeeService = new EmployeeService();
         List<Employee> employeeList = employeeService.getAll();
@@ -109,9 +145,7 @@
             <th>Phone</th>
             <th>Address</th>
             <th>Status</th>
-            <th colspan="2">
-                <a href="insertEmployee.jsp" class="insert-link">Insert New Employee</a>
-            </th>
+            <th colspan="2">Actions</th>
         </tr>
         </thead>
         <tbody>

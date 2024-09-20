@@ -97,22 +97,40 @@
         .insert-link a:hover {
             background-color: #218838;
         }
+        .back-link {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .back-link a {
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            border: 1px solid #007bff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .back-link a:hover {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
     </style>
 </head>
 <body>
 <div class="container">
     <h3>Customer List</h3>
-
-    <!-- Nút Insert được đặt bên trên bảng -->
-    <div class="insert-link">
-        <a href="insertCustomer.jsp">Insert New Customer</a>
+    <div class="back-link">
+        <a href="index.jsp">Trở về</a>
     </div>
-
+    <div class="insert-link">
+        <a href="insertCustomer.jsp">Thêm mới nhân viên</a>
+    </div>
     <%
         CustomerService customerService = new CustomerService();
         List<Customer> customerList = customerService.getAll();
     %>
-
     <table>
         <thead>
         <tr>
@@ -121,7 +139,7 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Address</th>
-            <th>Action</th>
+            <th colspan="2">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -138,6 +156,8 @@
             <td><%= customer.getAddress() %></td>
             <td class="action-links">
                 <a href="<%= editString %>" class="update">Update</a>
+            </td>
+            <td class="action-links">
                 <a href="<%= deleteString %>" class="delete">Delete</a>
             </td>
         </tr>

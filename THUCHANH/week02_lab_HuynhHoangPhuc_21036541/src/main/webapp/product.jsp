@@ -103,12 +103,33 @@
         a:hover {
             text-decoration: underline;
         }
+        .back-link {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .back-link a {
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            border: 1px solid #007bff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .back-link a:hover {
+            background-color: #007bff;
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
 
 <div id="container">
     <h3>Product List</h3>
+    <div class="back-link">
+        <a href="index.jsp">Trở về</a>
+    </div>
     <button style="margin-bottom: 20px; padding: 10px 20px; background-color: #007bff; color: #ffffff; border: none; border-radius: 4px; cursor: pointer;">
         <a href="insertProduct.jsp">Thêm</a>
     </button>
