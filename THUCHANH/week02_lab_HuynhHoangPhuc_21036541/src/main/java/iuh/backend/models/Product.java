@@ -35,6 +35,9 @@ public class Product {
 
     }
 
+    public Product(String name, String description, String unit, String manufacturer, ProductStatus productStatus) {
+    }
+
     public Long getId() {
         return id;
     }

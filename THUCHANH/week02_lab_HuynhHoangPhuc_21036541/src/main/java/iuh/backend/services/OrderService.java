@@ -22,4 +22,8 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
+    public void insertOrder(Order order) {
+        orderRepository.insertOrder(order);
+    }
+
 }

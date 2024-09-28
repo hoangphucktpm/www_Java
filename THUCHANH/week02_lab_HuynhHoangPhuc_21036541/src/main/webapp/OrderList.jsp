@@ -128,7 +128,7 @@
         <tbody>
         <% for(Order order : orderList) {
             long id = order.getId();
-            String detailString = "orderDetail.jsp?orderId=" + id; // Đường dẫn đến trang chi tiết hóa đơn
+            String detailString = "orderDetail.jsp?orderId=" + id;
         %>
         <tr>
             <td align="center"><%= id %></td>

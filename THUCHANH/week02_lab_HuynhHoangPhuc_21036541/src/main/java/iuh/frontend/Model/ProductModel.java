@@ -17,7 +17,6 @@ public class ProductModel {
     private final ProductService productService = new ProductService();
 
     public void insertProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String unit = request.getParameter("unit");
@@ -26,8 +25,8 @@ public class ProductModel {
 
 
 
-        Product product = new Product(id,name, description, unit, manufacturer, ProductStatus.valueOf(status));
-        productService.insertProduct(product);
+        Product product = new Product(name, description, unit, manufacturer, ProductStatus.valueOf(status));
+//        productService.insertProduct(product);
 
         response.sendRedirect("product.jsp");
     }

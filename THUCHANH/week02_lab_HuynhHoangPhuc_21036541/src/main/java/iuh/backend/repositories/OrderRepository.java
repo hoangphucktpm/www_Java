@@ -32,6 +32,17 @@ public class OrderRepository {
                 .getResultList();
     }
 
+    public void insertOrder(Order order) {
+        try {
+            et.begin();
+            em.persist(order);
+            et.commit();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            et.rollback();
+        }
+    }
+
 
 
 

@@ -108,16 +108,9 @@ public class ProductRepository {
         }
     }
 
-    public long getNextProductId() {
-        long maxId = getMaxProductId();
-        return maxId + 1;
-    }
 
-    private long getMaxProductId() {
-        String query = "SELECT MAX(p.id) FROM Product p";
-        TypedQuery<Long> q = em.createQuery(query, Long.class);
-        return q.getSingleResult();
-    }
+
+
 
     public void close() {
         em.close();

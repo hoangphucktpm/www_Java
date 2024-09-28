@@ -145,10 +145,6 @@
     <form action="controls?action=insert_products" method="post" onsubmit="return validateForm();">
         <table>
             <tr>
-                <td>Product ID:</td>
-                <td><input type="text" name="product_id" value="<%= productService.getNextProductId() %>" readonly></td>
-            </tr>
-            <tr>
                 <td>Product Name:</td>
                 <td><input type="text" name="name" required></td>
             </tr>
