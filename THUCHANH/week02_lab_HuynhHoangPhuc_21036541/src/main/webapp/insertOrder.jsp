@@ -154,7 +154,7 @@
                             <option value="<%= product.getId() %>">
                                 <%= product.getName() %> -
                                 <%
-                                    // Gọi phương thức để lấy danh sách giá dựa trên productId
+                                    // Gọi phương thức để lấy danh  sách giá dựa trên productId
                                     for(Productprice price : productService.getProductByPrice(product.getId())) {
                                 %>
                                 Giá: <%= price.getPrice() %> VND
