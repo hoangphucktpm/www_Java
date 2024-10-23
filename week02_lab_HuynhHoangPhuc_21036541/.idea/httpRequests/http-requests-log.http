@@ -1,0 +1,40 @@
+GET http://localhost:8080/week02-1.0-SNAPSHOT/api/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-09-14T200227.200.json
+
+###
+
+POST http://localhost:8080/week02-1.0-SNAPSHOT/api/students/add
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-09-14T195934.405.html
+
+###
+
+POST http://localhost:8080/api/students/add
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-09-14T195838.404.html
+
+###
+
+GET http://localhost:8080/week02-1.0-SNAPSHOT/api/students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-09-14T195509.200.json
+
+###
+

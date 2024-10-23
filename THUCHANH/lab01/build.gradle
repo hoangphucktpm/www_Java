@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'iuh'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.2'
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Dependency cho Jakarta Servlet API
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+
+    // Dependency cho JDBC driver SQL Server
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.2.0.jre8'
+
+    // Các dependency cho JUnit
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
