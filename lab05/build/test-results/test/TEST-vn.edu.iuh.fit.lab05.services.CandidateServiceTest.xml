@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="vn.edu.iuh.fit.lab05.services.CandidateServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-12T13:08:58" hostname="PHANHOANGTAN" time="0.946">
-  <properties/>
-  <testcase name="testAddCandidate()" classname="vn.edu.iuh.fit.lab05.services.CandidateServiceTest" time="0.946"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
